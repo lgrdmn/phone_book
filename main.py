@@ -122,25 +122,23 @@ def update_subscriber():
     print('Абонент отсутствует в телефонном справочнике.')
 
 
-creator_db()
-print(all_subscribers())
-
-while True:
-    command = input('Введите A, если хотите добавить абонента \n'
-                    'Введите D, если хотите удалить абонента \n'
-                    'Введите F, если хотите найти абонента \n'
-                    'Введите U, если хотите изменить данные абонента \n'
-                    'Введите E, если хотите выйти \n')
-    if command == 'A' or command == 'a':
-        add_subscriber()
-    elif command == 'D' or command == 'd':
-        del_subscriber()
-    elif command == 'F' or command == 'f':
-        find_subscriber()
-    elif command == 'U' or command == 'u':
-        update_subscriber()
-    elif command == 'E' or command == 'e':
-        break
-    else:
-        print('Вы ввели неверную команду.')
-
+if __name__ == '__main__':
+    creator_db()
+    while True:
+        command = input('Введите A, если хотите добавить абонента \n'
+                        'Введите D, если хотите удалить абонента \n'
+                        'Введите F, если хотите найти абонента \n'
+                        'Введите U, если хотите изменить данные абонента \n'
+                        'Введите E, если хотите выйти \n')
+        if command == 'A' or command == 'a':
+            add_subscriber()
+        elif command == 'D' or command == 'd':
+            del_subscriber()
+        elif command == 'F' or command == 'f':
+            find_subscriber()
+        elif command == 'U' or command == 'u':
+            update_subscriber()
+        elif command == 'E' or command == 'e':
+            break
+        else:
+            print('Вы ввели неверную команду.')
