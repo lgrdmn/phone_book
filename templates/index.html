@@ -12,31 +12,26 @@
   </head>
   <body>
     <h1>Телефонный справочник v1.0</h1>
-    <form name="test" method="post" action="input1.php">
-  <p><b>Введите номер телефона:</b><br>
-   <input type="text" size="40">
-  </p>
-  <p><input type="button" value=" Найти "></p>
-  <p><input type="button" value=" Добавить "></p>
+    <form method="get" action="/find">
+      <p><b>Введите номер телефона:</b><br>
+        <input name="phone" type="text" size="40">
+        <p><input type="submit" value=" Найти "></p>
+    </form>
+    <form method="get" action="/add" >
+        <p><b>Введите имя абонента:</b><br>
+        <input name="first_name" type="text" size="40">
+        <p><b>Введите фамилию абонента:</b><br>
+        <input name="last_name" type="text" size="40">
+        <p><b>Введите улицу абонента:</b><br>
+        <input name="street_name" type="text" size="40">
+        <p><b>Введите номер дома абонента:</b><br>
+        <input name="house_number" type="text" size="40">
+        <p><input type="submit" value=" Добавить "></p>
+    </form>
   <p><input type="button" value=" Удалить "></p>
   <p><input type="button" value=" Изменить "></p>
-    <form name="test" method="post" action="input1.php">
-  <p><b>Введите имя абонента:</b><br>
-   <input type="text" size="40">
-  </p>
-    <form name="test" method="post" action="input1.php">
-  <p><b>Введите фамилию абонента:</b><br>
-   <input type="text" size="40">
-  </p>
-      <form name="test" method="post" action="input1.php">
-  <p><b>Введите улицу абонента:</b><br>
-   <input type="text" size="40">
-  </p>
-      <form name="test" method="post" action="input1.php">
-  <p><b>Введите номер дома абонента:</b><br>
-   <input type="text" size="40">
-  </p>
-<p>Сообщение с результатом действия</p>
+
+  <p>{{ message }}</p>
 <style>
     table.iksweb{
 	width: 100%;
@@ -53,8 +48,8 @@ table.iksweb td,table.iksweb th {
 	height: 35px;
 }
 table.iksweb th {
-	background: #347c99; 
-	color: #fff; 
+	background: #347c99;
+	color: #fff;
 	font-weight: normal;
 }
 </style>
@@ -67,12 +62,12 @@ table.iksweb th {
 			<td>Улица</td>
 			<td>№ дома</td>
 		</tr>
-		<tr>
-			<td>88005553535</td>
-			<td>Иван</td>
-			<td>Петров</td>
-			<td>Земля</td>
-			<td>17</td>
+    		<tr>
+			<td>{{ phone_number }}</td>
+			<td>{{ first_name }}</td>
+			<td>{{ last_name }}</td>
+			<td>{{ street_name }}</td>
+			<td>{{ house_number }}</td>
 		</tr>
 	</tbody>
 </table>

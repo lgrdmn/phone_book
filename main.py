@@ -45,34 +45,43 @@ def add_values_to_db(user):
     conn.close()
 
 
-def add_subscriber():
+def add_subscriber(pnum, fname, lname, streetname, hnum):
     """Добавление абонента в телефонный справочник"""
     subscriber = ['', '', '', '', '']
-    subscriber[0] = input("Введите телефонный номер абонента: ")
-    check = one_subscriber_finder(subscriber[0])
+    check = one_subscriber_finder(pnum)
     if check:
-        print('Абонент c таким номером телефона уже есть в телефонном справочнике:', check[0][0],
-              check[0][1], check[0][2], check[0][3], check[0][4])
-        return
-    subscriber[1] = input("Введите имя абонента: ")
-    subscriber[2] = input("Введите фамилию абонента: ")
-    subscriber[3] = input("Введите улицу абонента: ")
-    subscriber[4] = input("Введите номер дома абонента: ")
-    subscriber = tuple(subscriber)
-    add_values_to_db(subscriber)
-    print('Абонент:', subscriber[0], subscriber[1], subscriber[2], subscriber[3], subscriber[4],
-          'добавлен в телефонный справочник')
+        message = 'Абонент c таким номером телефона уже есть в телефонном справочнике'
+    else:
+        subscriber[0] = pnum
+        subscriber[1] = fname
+        subscriber[2] = lname
+        subscriber[3] = streetname
+        subscriber[4] = hnum
+        subscriber = tuple(subscriber)
+        add_values_to_db(subscriber)
+        message = 'Абонент добавлен в телефонный справочник.'
+        return message
 
 
-def find_subscriber():
+def find_subscriber(find_number):
     """Поиск абонента в телефонном справочнике по номеру телефона"""
-    find_number = input("Введите телефонный номер абонента которого хотите НАЙТИ: ")
+    # find_number = input("Введите телефонный номер абонента которого хотите НАЙТИ: ")
     check = one_subscriber_finder(find_number)
+    pnum = ''
+    fname = ''
+    lname = ''
+    streetname = ''
+    hnum = ''
     if check:
-        print('Абонент есть в телефонном справочнике:', check[0][0],
-              check[0][1], check[0][2], check[0][3], check[0][4])
-        return
-    print('Абонент отсутствует в телефонном справочнике.')
+        message = 'Абонент есть в телефонном справочнике:'
+        pnum = check[0][0]
+        fname = check[0][1]
+        lname = check[0][2]
+        streetname = check[0][3]
+        hnum = check[0][4]
+    else:
+        message = 'Абонент отсутствует в телефонном справочнике.'
+    return message, pnum, fname, lname, streetname, hnum
 
 
 def del_subscriber():
@@ -124,6 +133,7 @@ def update_subscriber():
 
 if __name__ == '__main__':
     creator_db()
+    print(all_subscribers())
     while True:
         command = input('Введите A, если хотите добавить абонента \n'
                         'Введите D, если хотите удалить абонента \n'
