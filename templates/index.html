@@ -12,12 +12,10 @@
   </head>
   <body>
     <h1>Телефонный справочник v1.0</h1>
-    <form method="get" action="/find">
-      <p><b>Введите номер телефона:</b><br>
+    <p><b>Введите номер телефона:</b><br>
+    <form method="get" action="/send">
         <input name="phone" type="text" size="40">
-        <p><input type="submit" value=" Найти "></p>
-    </form>
-    <form method="get" action="/add" >
+        <p><input type="submit" name="submit_button" value=" Найти "></p>
         <p><b>Введите имя абонента:</b><br>
         <input name="first_name" type="text" size="40">
         <p><b>Введите фамилию абонента:</b><br>
@@ -26,9 +24,9 @@
         <input name="street_name" type="text" size="40">
         <p><b>Введите номер дома абонента:</b><br>
         <input name="house_number" type="text" size="40">
-        <p><input type="submit" value=" Добавить "></p>
+        <p><input type="submit" name="submit_button" value=" Добавить "></p>
+        <p><input type="submit" name="submit_button" value=" Удалить "></p>
     </form>
-  <p><input type="button" value=" Удалить "></p>
   <p><input type="button" value=" Изменить "></p>
 
   <p>{{ message }}</p>

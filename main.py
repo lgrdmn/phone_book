@@ -49,8 +49,14 @@ def add_subscriber(pnum, fname, lname, streetname, hnum):
     """Добавление абонента в телефонный справочник"""
     subscriber = ['', '', '', '', '']
     check = one_subscriber_finder(pnum)
+    print(check)
     if check:
         message = 'Абонент c таким номером телефона уже есть в телефонном справочнике'
+        pnum = check[0][0]
+        fname = check[0][1]
+        lname = check[0][2]
+        streetname = check[0][3]
+        hnum = check[0][4]
     else:
         subscriber[0] = pnum
         subscriber[1] = fname
@@ -60,18 +66,12 @@ def add_subscriber(pnum, fname, lname, streetname, hnum):
         subscriber = tuple(subscriber)
         add_values_to_db(subscriber)
         message = 'Абонент добавлен в телефонный справочник.'
-        return message
+    return message, pnum, fname, lname, streetname, hnum
 
 
 def find_subscriber(find_number):
     """Поиск абонента в телефонном справочнике по номеру телефона"""
-    # find_number = input("Введите телефонный номер абонента которого хотите НАЙТИ: ")
     check = one_subscriber_finder(find_number)
-    pnum = ''
-    fname = ''
-    lname = ''
-    streetname = ''
-    hnum = ''
     if check:
         message = 'Абонент есть в телефонном справочнике:'
         pnum = check[0][0]
@@ -81,23 +81,37 @@ def find_subscriber(find_number):
         hnum = check[0][4]
     else:
         message = 'Абонент отсутствует в телефонном справочнике.'
+        pnum = ''
+        fname = ''
+        lname = ''
+        streetname = ''
+        hnum = ''
     return message, pnum, fname, lname, streetname, hnum
 
 
-def del_subscriber():
+def del_subscriber(del_number):
     """Удаление абонента из телефонного справочника по номеру телефона"""
-    del_number = input("Введите телефонный номер абонента которого хотите УДАЛИТЬ: ")
     check = one_subscriber_finder(del_number)
     if check:
         conn = sqlite3.connect('phone_book.db')
         cur = conn.cursor()
         cur.execute("DELETE FROM subscribers WHERE phone_number=?;", (del_number,))
-        print('Абонент:', check[0][0], check[0][1], check[0][2],
-              check[0][3], check[0][4], 'удалён из телефонного справочника')
+        message = 'Абонент удалён из телефонного справочника'
+        pnum = check[0][0]
+        fname = check[0][1]
+        lname = check[0][2]
+        streetname = check[0][3]
+        hnum = check[0][4]
         conn.commit()
         conn.close()
-        return
-    print('Абонент отсутствует в телефонном справочнике.')
+    else:
+        message = 'Абонент отсутствует в телефонном справочнике.'
+        pnum = ''
+        fname = ''
+        lname = ''
+        streetname = ''
+        hnum = ''
+    return message, pnum, fname, lname, streetname, hnum
 
 
 def update_subscriber():
