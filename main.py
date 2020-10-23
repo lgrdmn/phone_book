@@ -114,35 +114,27 @@ def del_subscriber(del_number):
     return message, pnum, fname, lname, streetname, hnum
 
 
-def update_subscriber():
+def update_subscriber(pnum, fname, lname, streetname, hnum):
     """Изменение данных абонента в телефонном справочнике"""
-    update_number = input("Введите телефонный номер абонента данные которого хотите ИЗМЕНИТЬ: ")
-    check = one_subscriber_finder(update_number)
+    check = one_subscriber_finder(pnum)
     if check:
-        print('Данные абонента которого вы хотите ИЗМЕНИТЬ:', check[0][0],
-              check[0][1], check[0][2], check[0][3], check[0][4])
-        action = input('Вы уверены, что хотите внести изменения? Y/N \n')
-        if action == 'Y' or action == 'y':
-            conn = sqlite3.connect('phone_book.db')
-            cur = conn.cursor()
-            cur.execute("DELETE FROM subscribers WHERE phone_number=?;", (update_number,))
-            conn.commit()
-            subscriber = ['', '', '', '', '']
-            subscriber[0] = input("Введите НОВЫЙ телефонный номер абонента: ")
-            subscriber[1] = input("Введите НОВОЕ имя абонента: ")
-            subscriber[2] = input("Введите НОВУЮ фамилию абонента: ")
-            subscriber[3] = input("Введите НОВУЮ улицу абонента: ")
-            subscriber[4] = input("Введите НОВЫЙ номер дома абонента: ")
-            subscriber = tuple(subscriber)
-            add_values_to_db(subscriber)
-            print('Данные абонента:', subscriber[0], subscriber[1], subscriber[2], subscriber[3],
-                  subscriber[4], 'изменены в телефонный справочник')
-            conn.commit()
-            conn.close()
-        elif action == 'N' or action == 'n':
-            pass
-        return
-    print('Абонент отсутствует в телефонном справочнике.')
+        conn = sqlite3.connect('phone_book.db')
+        cur = conn.cursor()
+        cur.execute("UPDATE subscribers SET 'phone_number'=?, 'first_name'=?, 'last_name'=?, "
+                    "'street_name'=?, 'house_number'=? WHERE phone_number=?;",
+                    (pnum, fname, lname, streetname, hnum, pnum))
+        conn.commit()
+        message = 'Данные абонента изменены в телефонном справочнике'
+        conn.commit()
+        conn.close()
+    else:
+        message = 'Абонент с таким номером телефона отсутствует в телефонном справочнике.'
+        pnum = ''
+        fname = ''
+        lname = ''
+        streetname = ''
+        hnum = ''
+    return message, pnum, fname, lname, streetname, hnum
 
 
 if __name__ == '__main__':
