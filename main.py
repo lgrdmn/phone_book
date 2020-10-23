@@ -143,4 +143,3 @@ while True:
         break
     else:
         print('Вы ввели неверную команду.')
-
